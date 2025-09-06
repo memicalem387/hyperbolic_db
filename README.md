@@ -1,4 +1,4 @@
-# hyperbolic_db: Enhanced Hyperbolic Vector Database
+# HyperbolicDB: Enhanced Hyperbolic Vector Database
 
 An enhanced vector database implemented in Go, designed for efficient storage and similarity search of high-dimensional vectors within a hyperbolic space. This system utilizes the **Poincaré ball model** to represent data hierarchies and employs a specialized **Locality-Sensitive Hashing (LSH)** index for fast approximate nearest neighbor (ANN) search. Data persistence is handled by an embedded key-value store, **bbolt**, and all functionality is exposed via a RESTful HTTP API.
 
