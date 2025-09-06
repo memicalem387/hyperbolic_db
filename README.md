@@ -29,7 +29,7 @@ Before you begin, make sure you have the necessary tools installed on your syste
 Open your terminal and run the following command to download a copy of the project's source code.
 
 
-g   it clone https://github.com/memicalem387/hyperbolic_db.git
+    git clone https://github.com/memicalem387/hyperbolic_db.git
 
 ### Step 3: Install Dependencies and Build
 
@@ -57,7 +57,7 @@ Step 4: Run the Server
 Now that the application is built, you can start the server.
 Bash
 
-``` ./hyperbolic_db ```
+    ./hyperbolic_db
 
 The server will start on http://localhost:8080. It will automatically load any existing data or create a new database with sample data if it's the first time you're running it.
 
@@ -79,16 +79,18 @@ Add a new vector with an optional ID. If no ID is provided, one will be generate
     "id": "optional_item_id",
     "vector": [0.1, 0.2, 0.3, 0.4]
 }
-
+```
 Example:
-Bash
 
-    curl -X POST http://localhost:8080/add -H "Content-Type: application/json" -d '{"vector": [0.6, 0.3]}'
+```
+curl -X POST http://localhost:8080/add -H "Content-Type: application/json" -d '{"vector": [0.6, 0.3]}'
+```
 
 Search for Nearest Neighbors
 
 Search for the k nearest neighbors to a query vector. The search uses ANN by default but can be configured for exact (brute-force) search.
 
+```
     Endpoint: POST /search
 
     Request Body:
@@ -100,34 +102,39 @@ Search for the k nearest neighbors to a query vector. The search uses ANN by def
     "exact": false
 }
 
+```
 Example:
-Bash
 
+```
     curl -X POST http://localhost:8080/search -H "Content-Type: application/json" -d '{"vector": [0.7, 0.2], "k": 3}'
-
+```
 Get Database Statistics
 
 Retrieve information about the database, including the total number of items, LSH buckets, and hash functions.
 
+
+
+```
     Endpoint: GET /stats
 
-    Example:
-    Bash
+```
+Example:
 
-    curl http://localhost:8080/stats
+```
+curl http://localhost:8080/stats
 ```
 
 ###  Architecture Overview
 
 The system architecture is composed of several key components that work together to provide efficient vector search:
 
-    HTTP API Layer: Handles incoming requests and translates them into database operations.
+- HTTP API Layer: Handles incoming requests and translates them into database operations.
 
-    HyperbolicDB: The core database engine that manages in-memory data, the LSH index, and persistence.
+- HyperbolicDB: The core database engine that manages in-memory data, the LSH index, and persistence.
 
-    LSH Index: An in-memory index that uses a specialized hash function to group similar hyperbolic vectors, enabling fast ANN searches.
+- LSH Index: An in-memory index that uses a specialized hash function to group similar hyperbolic vectors, enabling fast ANN searches.
 
-    bbolt Storage: The persistence layer that stores all vector data on disk, ensuring data durability.
+- bbolt Storage: The persistence layer that stores all vector data on disk, ensuring data durability.
 
-    Mathematical Core: Contains the core logic for calculating the Poincaré distance and normalizing vectors for hyperbolic space.
+- Mathematical Core: Contains the core logic for calculating the Poincaré distance and normalizing vectors for hyperbolic space.
 
