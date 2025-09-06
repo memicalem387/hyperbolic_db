@@ -55,7 +55,7 @@ Build the Application: This command compiles the source code into a single execu
 Step 4: Run the Server
 
 Now that the application is built, you can start the server.
-Bash
+
 
     ./hyperbolic_db
 
