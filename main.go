@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	bolt "go.etcd.io/bbolt"
+	"go.etcd.io/bbolt"
 )
 
 // Vector represents a point in a multi-dimensional space.
@@ -58,7 +58,7 @@ type HyperbolicDB struct {
 	mu                    sync.RWMutex
 	items                 map[string]Item
 	lshIndex              *LSHIndex
-	boltDB                *bolt.DB
+	boltDB                *bbolt.DB
 	dataPath              string
 	indexRebuildThreshold int
 	itemCount             int
@@ -95,13 +95,13 @@ func NewHyperbolicDB(config *Config) (*HyperbolicDB, error) {
 
 	// Open BoltDB for persistence
 	dbPath := filepath.Join(config.DataPath, "vectors.db")
-	boltDB, err := bolt.Open(dbPath, 0600, &bolt.Options{Timeout: 1 * time.Second})
+	boltDB, err := bbolt.Open(dbPath, 0600, &bbolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %v", err)
 	}
 
 	// Initialize buckets
-	err = boltDB.Update(func(tx *bolt.Tx) error {
+	err = boltDB.Update(func(tx *bbolt.Tx) error {
 		_, err := tx.CreateBucketIfNotExists([]byte("items"))
 		if err != nil {
 			return fmt.Errorf("create bucket: %s", err)
@@ -303,7 +303,7 @@ func (db *HyperbolicDB) Add(item Item) (string, error) {
 	db.lshIndex.Add(item)
 
 	// Persist to disk
-	err := db.boltDB.Update(func(tx *bolt.Tx) error {
+	err := db.boltDB.Update(func(tx *bbolt.Tx) error {
 		b := tx.Bucket([]byte("items"))
 
 		// Encode item
@@ -468,7 +468,7 @@ func (db *HyperbolicDB) rebuildIndex() {
 
 // loadFromDisk loads all persisted data from BoltDB
 func (db *HyperbolicDB) loadFromDisk() error {
-	return db.boltDB.View(func(tx *bolt.Tx) error {
+	return db.boltDB.View(func(tx *bbolt.Tx) error {
 		b := tx.Bucket([]byte("items"))
 		if b == nil {
 			return nil // No data to load
