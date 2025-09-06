@@ -1,1 +1,3 @@
-Hyperbolic geometry
+# Hyperbolic Vector Database in Go (Vibe Coding)
+
+
