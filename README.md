@@ -28,30 +28,29 @@ Before you begin, make sure you have the necessary tools installed on your syste
 
 Open your terminal and run the following command to download a copy of the project's source code.
 
-```
-git clone https://github.com/memicalem387/hyperbolic_db.git
-```
+
+g   it clone https://github.com/memicalem387/hyperbolic_db.git
 
 ### Step 3: Install Dependencies and Build
 
 Navigate into the project directory and use the Go module system to install the required packages and build the application
 
-``` cd hyperbolic_db ```
+    cd hyperbolic_db
 
 Initialize Go Modules: This command creates a go.mod file to manage your dependencies. If you already have one, you can skip this step.
-Bash
 
-``` go mod init hyperbolic_db ```
+
+    go mod init hyperbolic_db
 
 Install Dependencies: This command downloads and installs all the necessary packages your project needs, like bbolt and uuid.
-Bash
 
-``` go mod tidy ```
+
+    go mod tidy
 
 Build the Application: This command compiles the source code into a single executable file.
-Bash
 
-    ``` go build -o hyperbolic_db . ```
+    go build -o hyperbolic_db . 
+
 
 Step 4: Run the Server
 
